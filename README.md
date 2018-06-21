@@ -1,0 +1,2 @@
+# wlog
+go log
