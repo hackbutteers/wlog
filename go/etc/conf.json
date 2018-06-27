@@ -1,0 +1,75 @@
+{ 
+    "Loggers":
+    [
+        {
+            "Name": "mytest_log",
+            "Channels" : [
+                {
+                    "Name":"text",
+                    "Level":"info",
+                    "Handlername":"default_text_handler",
+                    "Formatter":"default_test_formatter",
+                    "Format":"%+",
+                    "Time_utc":"yes",
+                    "Sinks":[
+                        {
+                            "Ctype":"stdout_channel",
+                            "Dir":"./log",
+                            "Fix":".log",
+                            "Flush_size":3000,
+                            "Max_files":20,
+                            "Singal_file_size":128,
+                            "Total_size":1024,
+                            "Save_days":4,
+                            "Flush_sec":3,
+                            "Raw":"abc"
+                        }
+                    ]
+                }
+                
+            ]
+        },
+        {
+            "Name": "mytest_log1",
+            "Channels" : [
+                {
+                    "Name":"log1",
+                    "Level":"info",
+                    "Handlername":"default_text_handler",
+                    "Formatter":"default_test_formatter",
+                    "Format":"%+",
+                    "Time_utc":"yes",
+                    "Sinks":[
+                        {
+                            "Ctype":"stdout_channel",
+                            "Name":"s1",
+                            "Dir":"./log",
+                            "Fix":".log",
+                            "Flush_size":3000,
+                            "Max_files":20,
+                            "Singal_file_size":128,
+                            "Total_size":1024,
+                            "Save_days":4,
+                            "Flush_sec":3,
+                            "Raw":"abc"
+                        },
+                        {
+                            "Ctype":"mstdout_channel",
+                            "Name":"s2",
+                            "Dir":"./log",
+                            "Fix":".log",
+                            "Flush_size":3000,
+                            "Max_files":20,
+                            "Singal_file_size":128,
+                            "Total_size":1024,
+                            "Save_days":4,
+                            "Flush_sec":3,
+                            "Raw":"abc"
+                        }
+                    ]
+                }
+                
+            ]
+        }
+    ]
+}
