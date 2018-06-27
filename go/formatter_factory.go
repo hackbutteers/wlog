@@ -17,9 +17,7 @@ type FormatterFactory struct {
 
 var g_formatter_factory *FormatterFactory
 
-const (
-	DTESTF = "default_test_formatter"
-)
+
 func init() {
 	g_formatter_factory = &FormatterFactory{new(sync.Mutex), make(map[string]FormatterBuilderInterface, 10)}	
 	//buildin

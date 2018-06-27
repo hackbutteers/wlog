@@ -1,17 +1,19 @@
 package wlog 
 
 import (
+	"os"
 	"time"
 )
 
 
 type Logger struct {
 	name  string
+	pid   int
 	sinks map[string]*LogChannel
 }
 
 func NewLogger(name string) *Logger {
-	return &Logger{name, make(map[string]*LogChannel, 5)}
+	return &Logger{name, os.Getegid(),make(map[string]*LogChannel, 5)}
 }
 
 func (lg *Logger) Name() string {

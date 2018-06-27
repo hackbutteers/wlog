@@ -1,5 +1,10 @@
 package wlog
 
+import (
+	"bytes"
+	"sync"
+)
+
 
 type LogChannel struct {
 	ArgsHandler   UserHandler
@@ -7,10 +12,16 @@ type LogChannel struct {
 	LogLevel      Level
 	Name          string
 	Sinks         []Channel
+	rawPool      *sync.Pool
+	formatedPool *sync.Pool
 }
 
 func NewLogChannel(name string) *LogChannel {
-	return &LogChannel{nil, nil, TraceLevel, name, make([]Channel, 0, 5)}
+	return &LogChannel{nil, nil, TraceLevel, name, make([]Channel, 0, 5),&sync.Pool{New: func() interface{} { 
+		return new(bytes.Buffer)
+	},}, &sync.Pool{New: func() interface{} {
+		return new(bytes.Buffer)
+	},}}
 }
 func (lc *LogChannel)SetLogChannelName(s string) {
 	lc.Name = s
@@ -57,7 +68,13 @@ func (lc *LogChannel)LogF(ml *MessageLite, format string, v...interface{}) {
 	if !lc.ShouldLog(ml.LogLevel) {
 		return
 	}
-	msg := NewMessage(ml)
+	raw,_ := lc.rawPool.Get().(*bytes.Buffer)
+	formated, _ := lc.formatedPool.Get().(*bytes.Buffer)
+	raw.Reset()
+	formated.Reset()
+	defer lc.rawPool.Put(raw)
+	defer lc.rawPool.Put(formated)
+	msg := NewMessage(ml, raw, formated)
 	lc.ArgsHandler.Formatf(msg.Raw, format, v...)
 	lc.LogFormatter.Format(msg)
 	lc.Sink(msg)
@@ -67,7 +84,13 @@ func (lc *LogChannel)Log(ml *MessageLite, v...interface{}) {
 	if !lc.ShouldLog(ml.LogLevel) {
 		return
 	}
-	msg := NewMessage(ml)
+	raw,_ := lc.rawPool.Get().(*bytes.Buffer)
+	formated, _ := lc.formatedPool.Get().(*bytes.Buffer)
+	raw.Reset()
+	formated.Reset()
+	defer lc.rawPool.Put(raw)
+	defer lc.rawPool.Put(formated)
+	msg := NewMessage(ml, raw, formated)
 	lc.ArgsHandler.Format(msg.Raw, v...)
 	lc.LogFormatter.Format(msg)
 	lc.Sink(msg)

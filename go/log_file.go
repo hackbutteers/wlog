@@ -14,7 +14,7 @@ type LogFile struct {
 }
 
 func NewLogFile(name string) (*LogFile, error) {
-	f, err := os.OpenFile(name, os.O_RDWR|os.O_CREATE, 0755)
+	f, err := os.OpenFile(name, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0755)
 	if err != nil {
 		return nil, err
 	}
@@ -43,8 +43,11 @@ func (f *LogFile)Reset(name string) (*LogFile, error) {
 
 func (f *LogFile) WriteBuffer(buffer *bytes.Buffer) int {
 	len := buffer.Len()
-	rlen,_ := buffer.WriteTo(f.file)
-	wlen := int(rlen)
+	b := buffer.Bytes()
+	wlen, e := f.file.Write(b)
+	if e != nil {
+		return 0
+	}
 	if len == wlen {
 		f.write += len
 		return len

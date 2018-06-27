@@ -9,6 +9,7 @@ type ChannelConfig struct {
 	Ctype            string
 	Name             string
 	Dir              string
+	Prefix           string
 	Fix              string
 	Flush_size       int
 	Max_files        int

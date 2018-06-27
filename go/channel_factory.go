@@ -4,11 +4,6 @@ import (
 	"sync"
 )
 
-const (
-	STDOUT = "stdout_channel"
-	MSTDOUT = "mstdout_channel"
-)
-
 type ChannelBuilderInterface interface {
 	CreateChannel(conf *ChannelConfig) Channel
 }
@@ -24,6 +19,7 @@ func init() {
 	//buildin
 	AddBuilder(STDOUT, &StdoutChannelBuilder{})
 	AddBuilder(MSTDOUT, &MStdoutChannelBuilder{})
+	AddBuilder(MSFC, &MaxSizeFileChannelBuilder{})
 }
 
 func AddBuilder(name string, b ChannelBuilderInterface) {

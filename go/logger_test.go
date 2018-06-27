@@ -61,6 +61,11 @@ func TestLogger(t *testing.T) {
 		return
 	}
 
+	if lg1 == nil {
+		fmt.Println("log get error")
+		return
+	}
+
 	fmt.Println("start testing logger")	
 	
 	lg.Debugf("this should not display")
@@ -71,10 +76,11 @@ func TestLogger(t *testing.T) {
 	
 	lg1.Debugf("this should not display")
 	lg1.Debug("this should not display")
-
-	lg1.Info("this should  display")
-	
-	lg1.Infof("%s", "this should  display")
+	for i := 0; i < 100000; i++ {
+		lg1.Info("this should  display")
+		
+		lg1.Infof("%s", "this should  display")
+	}
 
 	fmt.Println("end testing logger")	
 }

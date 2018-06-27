@@ -4,9 +4,7 @@ import (
 	"sync"
 )
 
-const (
-	DUH = "default_text_handler"
-)
+
 type UserHandlerBuilderInterface interface {
 	CreateUH(conf *LogChannelConfig) UserHandler
 }

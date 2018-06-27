@@ -93,3 +93,7 @@ func AmPmhour(t time.Time) int {
 func formatTime(t time.Time) string {
     return t.Format("2006-01-02 15:04:05")
 }
+
+func formatTimeForFile(t time.Time) string {
+    return t.Format("2006-01-02-15-04-05-")
+}
