@@ -5,12 +5,6 @@ import (
 	"bytes"
 )
 
-type UserHandler interface {
-	Formatf(buffer *bytes.Buffer, format string, v...interface{})
-	Format(buffer *bytes.Buffer, v...interface{})
-	getName() string
-}
-
 type DefaultTextHandler struct {
 	Name  string
 }

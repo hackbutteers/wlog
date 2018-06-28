@@ -1,12 +1,9 @@
 package wlog
 
 import (
+	"fmt"
 	"sync"
 )
-
-type ChannelBuilderInterface interface {
-	CreateChannel(conf *ChannelConfig) Channel
-}
 
 type ChannelFactory struct {
 	mu       *sync.Mutex
@@ -45,6 +42,7 @@ func GetBuilder(cc *ChannelConfig) (ChannelBuilderInterface, bool) {
 	if ok {
 		return b, true
 	}	
+	fmt.Println("get channel builder", cc.Ctype, "error")
 	return nil, false
 }
 

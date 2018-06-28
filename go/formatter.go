@@ -3,10 +3,6 @@ package wlog
 import (
 	"bytes"
 )
-type Formatter interface {
-	Format(m *Message)
-	CompileConf(str string) bool
-}
 
 type DefaultTestFormatter struct {
 	Utc bool

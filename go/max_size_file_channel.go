@@ -1,8 +1,8 @@
 package wlog
 
 import (
-	"time"
 	"fmt"
+	"time"
 	"strconv"
 )
 type MaxSizeFileChannel struct {
@@ -22,7 +22,6 @@ func (sc *MaxSizeFileChannel)genFileName() string {
 	ret = ret + formatTimeForFile(time.Now())
 	ret = ret + strconv.Itoa(sc.seq)
 	ret = ret + sc.fix
-	fmt.Println(ret)
 	sc.seq++
 	return ret
 }
@@ -83,6 +82,7 @@ func (b *MaxSizeFileChannelBuilder) CreateChannel(conf *ChannelConfig) Channel {
 	r.fileName = r.genFileName()
 	lf, e := NewLogFile(r.fileName)
 	if e != nil {
+		fmt.Println("dir not exit")
 		return nil
 	}
 	r.lf = lf

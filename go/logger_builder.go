@@ -75,18 +75,20 @@ func getRegister() *LogRegister {
 func LoggerInitFromFile(path string) bool {
 	lac, ok := ConfigLoad(path)
 	if !ok {
-		fmt.Println("load error")
+		fmt.Println("load config error")
 	}
 	getRegister().mu.Lock()
 	defer getRegister().mu.Unlock()
 	for _, lc := range lac.Loggers {
+		fmt.Println(lc.Name, "config")
 		_, ok := g_log_register.loggers[lc.Name]
 		if ok {
-			continue;
+			fmt.Println(lc.Name, "have registered")
+			return false;
 		}
 		lg := BuildLogger(&lc)
 		if lg == nil {
-			fmt.Println("create log error")
+			fmt.Println(lc.Name, "create log error")
 			return false
 		}
 		getRegister().loggers[lc.Name] = lg

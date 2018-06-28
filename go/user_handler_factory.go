@@ -5,10 +5,6 @@ import (
 )
 
 
-type UserHandlerBuilderInterface interface {
-	CreateUH(conf *LogChannelConfig) UserHandler
-}
-
 type UserHandlerFactory struct {
 	mu       *sync.Mutex
 	builders map[string]UserHandlerBuilderInterface

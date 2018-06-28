@@ -5,7 +5,7 @@
             "Name": "mytest_log",
             "Channels" : [
                 {
-                    "Name":"text",
+                    "Name":"stdout_channel",
                     "Level":"info",
                     "Handlername":"default_text_handler",
                     "Formatter":"default_test_formatter",
@@ -34,7 +34,7 @@
             "Name": "mytest_log1",
             "Channels" : [
                 {
-                    "Name":"log1",
+                    "Name":"file_channel",
                     "Level":"info",
                     "Handlername":"default_text_handler",
                     "Formatter":"default_test_formatter",

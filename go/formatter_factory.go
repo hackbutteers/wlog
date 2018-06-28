@@ -4,12 +4,6 @@ import (
 	"sync"
 )
 
-
-type FormatterBuilderInterface interface {
-	CreateFormatter(lc *LogChannelConfig)Formatter
-}
-
-
 type FormatterFactory struct {
 	mu       *sync.Mutex
 	builders map[string]FormatterBuilderInterface
